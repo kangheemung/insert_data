@@ -6,12 +6,13 @@ class Api::V1::PostsController < ApplicationController
         offset = (page - 1) * per_page # オフセット計算。表示する投稿データの開始位置を求める
         posts = Post.order(created_at: :desc).offset(offset).limit(per_page) # オフセットと表示数を使ってデータベースから投稿データを取得
 
-        @post_data = [] # 空の配列を作成
+        #@post_data = [] # 空の配列を作成
 
         # 取得した投稿データを1件ずつ処理
-        posts.each do |post|
-            @post_data << { title: post.title, body: post.body } # タイトルと本文をハッシュとして作成し、配列に追加
-        end
+        #posts.each do |post|
+           # @post_data << { title: post.title, body: post.body } # タイトルと本文をハッシュとして作成し、配列に追加
+        #end
+         @post_data = posts.map { |post| { title: post.title, body: post.body } } # 投稿データをハッシュ形式で生成し、配列として直接代入
 
       render json: @post_data #@post_dataをJSON形式でレスポンスとして返す
 
